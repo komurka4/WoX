@@ -1,0 +1,58 @@
+# Build trees and fetched third-party sources
+/build/
+/build-*/
+/deps/
+/out/
+/cmake-build-*/
+CMakeUserPresets.json
+compile_commands.json
+
+# Program data generated locally from your own XEEN.DAT (src/data/README.md): never commit it
+/src/data/*
+!/src/data/README.md
+/tools/data/meta/
+/build/program-data-meta/
+
+# Original game files, ROMs, disc images and saves: never commit them
+*.CC
+*.cc
+*.CUR
+*.cur
+*.DAT
+*.dat
+*.EXE
+*.exe
+*.WOX
+*.wox
+XEEN.CFG
+xeen.cfg
+*.ROM
+*.rom
+*.bin
+*.BIN
+*.cue
+*.CUE
+*.iso
+*.ISO
+*.gog
+*.GOG
+*.ogg
+*.zip
+/roms/
+/music/
+/game/
+
+# Local configuration, logs and package output
+wox.cfg
+wox.log
+dist/
+
+# Python, editors, OS
+__pycache__/
+*.pyc
+.vscode/
+.idea/
+*.swp
+*~
+.DS_Store
+Thumbs.db

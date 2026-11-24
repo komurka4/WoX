@@ -1,0 +1,41 @@
+# Style for the authored native C11 sources (docs/CODING_STYLE.md).
+# Pinned formatter: clang-format 18.1.8. Excluded paths: .clang-format-ignore.
+Language: Cpp
+BasedOnStyle: LLVM
+Standard: c++11
+IndentWidth: 4
+ContinuationIndentWidth: 8
+UseTab: Never
+ColumnLimit: 100
+BreakBeforeBraces: Custom
+BraceWrapping:
+  AfterFunction: true
+  AfterControlStatement: Never
+  AfterEnum: false
+  AfterStruct: false
+  AfterUnion: false
+  BeforeElse: false
+  SplitEmptyFunction: false
+AllowShortFunctionsOnASingleLine: None
+AllowShortIfStatementsOnASingleLine: Never
+AllowShortLoopsOnASingleLine: false
+AllowShortBlocksOnASingleLine: Never
+AllowShortCaseLabelsOnASingleLine: false
+AllowShortEnumsOnASingleLine: false
+InsertBraces: true
+IndentCaseLabels: true
+PointerAlignment: Right
+SortIncludes: Never
+IncludeBlocks: Preserve
+ReflowComments: false
+AlignTrailingComments:
+  Kind: Always
+  OverEmptyLines: 0
+AlignConsecutiveMacros: Consecutive
+AlignEscapedNewlines: Left
+SpaceAfterCStyleCast: false
+Cpp11BracedListStyle: true
+BinPackArguments: true
+BinPackParameters: true
+MaxEmptyLinesToKeep: 1
+KeepEmptyLinesAtTheStartOfBlocks: false

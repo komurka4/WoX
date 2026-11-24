@@ -1,0 +1,6 @@
+# Phase 334: digests of tests/test_phase334_x11_paint.c's two transcripts (`xeen_phase334_x11_paint_tests dump`):
+# NAME LINES FNV-1a-64. Equal for the Phase 333A platform.c (frozen base) and the Phase 334 tree.
+# Phase 335: the platform struct grew by 16 bytes (the configured scale and the screen's area), which the transcripts
+# log as calloc(1,197376) (was 197360); apart from that line they are equal to Phase 334's, compared line by line.
+paint 636 1a5d1967ed8141d8
+locked 93 cc041f7681452405

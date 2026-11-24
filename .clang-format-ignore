@@ -1,0 +1,16 @@
+# Not formatted (docs/CODING_STYLE.md): vendored code, pure data tables laid out
+# by hand, generated sources, and the owner-approved add-on/bug-fix families
+# (their own scope).
+src/audio/stb_vorbis.c
+src/data/*
+src/addon/*
+src/addon/*/*
+src/bugfix/*
+src/bugfix/*/*
+include/xeen/addon/*
+include/xeen/bugfix/*
+src/graphics/*_tables.inc
+src/world/*_tables.inc
+src/graphics/scene_visibility.inc
+src/ui/text_frame.inc
+src/graphics/window_table.inc

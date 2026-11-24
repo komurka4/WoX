@@ -1,0 +1,4 @@
+; xeen_mt32.dll exports only Munt's service entry; src/audio/mt32.c loads nothing else.
+LIBRARY xeen_mt32.dll
+EXPORTS
+    mt32emu_get_service_i

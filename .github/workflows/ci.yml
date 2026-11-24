@@ -1,0 +1,88 @@
+# Build checks for every push and pull request.
+#
+# The real game cannot be built here: it needs program data generated from the original game's XEEN.DAT, which must
+# never be uploaded. CI therefore builds with an all-zero placeholder (CMake option XEEN_PROGRAM_DATA_STUB): every
+# source is compiled and every program and library is linked, on Linux and for Windows, and the tests that do not
+# read the real data run. The resulting binaries do not work as a game and are not kept
+# (tools/release/make_release.py refuses them).
+name: CI
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  linux:
+    name: Linux build, tests and package
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install build dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y build-essential cmake python3 pkg-config git curl \
+            libx11-dev libgtk-3-dev libsdl2-dev libasound2-dev libpulse-dev
+
+      - name: Cache third-party downloads
+        uses: actions/cache@v4
+        with:
+          path: deps/downloads
+          key: deps-${{ hashFiles('tools/deps/fetch_deps.sh') }}
+
+      - name: Fetch pinned third-party sources
+        run: JOBS=4 tools/deps/fetch_deps.sh
+
+      - name: Check scripts
+        run: |
+          python3 -m py_compile $(git ls-files '*.py')
+          for f in $(git ls-files '*.sh'); do bash -n "$f"; done
+
+      - name: Configure (placeholder program data)
+        run: cmake -S . -B build/ci -DCMAKE_BUILD_TYPE=Release -DXEEN_PROGRAM_DATA_STUB=ON
+
+      - name: Build
+        run: cmake --build build/ci -j4
+
+      - name: Tests (those that do not need the real program data)
+        run: ctest --test-dir build/ci -j4 --output-on-failure -LE needs-program-data
+
+      - name: Package check
+        env:
+          JOBS: 4
+          XEEN_CMAKE_ARGS: -DXEEN_PROGRAM_DATA_STUB=ON
+        run: tools/linux/package.sh
+
+  windows:
+    name: Windows cross-build and package (MinGW-w64)
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install build dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y build-essential cmake python3 git curl \
+            gcc-mingw-w64-x86-64-win32 g++-mingw-w64-x86-64-win32 binutils-mingw-w64-x86-64
+
+      - name: Cache third-party downloads
+        uses: actions/cache@v4
+        with:
+          path: deps/downloads
+          key: deps-${{ hashFiles('tools/deps/fetch_deps.sh') }}
+
+      - name: Fetch pinned third-party sources
+        run: JOBS=4 tools/deps/fetch_deps.sh --no-munt-build
+
+      - name: Cross-build and package check (placeholder program data)
+        env:
+          JOBS: 4
+          XEEN_CMAKE_ARGS: -DXEEN_PROGRAM_DATA_STUB=ON
+        run: tools/windows/package.sh
+
+      - name: Version resources
+        run: python3 -B tools/windows/check_versions.py build/windows-package/dist --wox "$(sed -n 's/.*WOX_VERSION "\(.*\)").*/\1/p' versions.cmake)" --setup "$(sed -n 's/.*SETUP_VERSION "\(.*\)").*/\1/p' versions.cmake)"

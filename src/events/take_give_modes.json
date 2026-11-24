@@ -1,0 +1,260 @@
+{
+ "format": "xeen-take-give-modes-1",
+ "about": "The take/give modes the native take_give (src/events/event_exec.c, original 2C94C) implements. Every other mode in 0..255 returns TAKE_GIVE_UNSUPPORTED at the dispatch stop (take 2C9FF, give 2CFD9). Each entry names the original handler from the dispatch tables (take CS:23D5 by mode - 8, modes 8..6Bh, else 2CFC9; give CS:22F1 by mode - 3, modes 3..6Bh, else 2DC50; CS = 2B98h). Checked by tools/coverage/world_exceptions.py check (each handler against the XEEN.DAT image) and by CTest phase228_take_give_contract (the implementation behaviour, every mode 0..255 in each role). Update this file in the same change that adds or removes a mode.",
+ "stops": {
+  "take": "2C9FF",
+  "give": "2CFD9"
+ },
+ "take": {
+  "0": {
+   "original": "2CFC9",
+   "what": "nothing taken (the take table starts at mode 8; 2CFC9 skips to the give)"
+  },
+  "12": {
+   "original": "2CA5F",
+   "what": "temporary age (record +AGE_BONUS) minus the value"
+  },
+  "13": {
+   "original": "2CA70",
+   "what": "a skill byte cleared"
+  },
+  "18": {
+   "original": "2CAB3",
+   "what": "a condition byte cleared"
+  },
+  "20": {
+   "original": "2CB23",
+   "what": "a map flag bit of F01F cleared (side x 256 + value)"
+  },
+  "21": {
+   "original": "2CB3A",
+   "what": "an item: the first matching row removed by 43385/43428, or a quest-item counter F025 decremented; none: REFUSED"
+  },
+  "34": {
+   "original": "2CC9A",
+   "what": "party gold (F00A) minus the value; too little: SHORT"
+  },
+  "35": {
+   "original": "2CCB8",
+   "what": "party gems (F00E) minus the value; too little: SHORT"
+  },
+  "103": {
+   "original": "2CF8D",
+   "what": "a game flag bit of F05F cleared"
+  },
+  "104": {
+   "original": "2CF98",
+   "what": "a map flag bit of F06F cleared (side x 30 + value)"
+  }
+ },
+ "give": {
+  "0": {
+   "original": "2DC50",
+   "what": "nothing given"
+  },
+  "8": {
+   "original": "2D005",
+   "what": "HP: the flash first, the caller adds the low word"
+  },
+  "9": {
+   "original": "2D025",
+   "what": "SP plus the low word"
+  },
+  "11": {
+   "original": "2D049",
+   "what": "temporary level plus the low byte"
+  },
+  "12": {
+   "original": "2D05A",
+   "what": "temporary age plus the low byte (no flash)"
+  },
+  "13": {
+   "original": "2D06B",
+   "what": "a skill byte incremented"
+  },
+  "15": {
+   "original": "2D078",
+   "what": "an award (46384); award 8 without the flash"
+  },
+  "16": {
+   "original": "2D0A0",
+   "what": "experience (dword) plus the value"
+  },
+  "18": {
+   "original": "2D0C2",
+   "what": "a condition: 16 clears all, In Love set, others incremented; Dead/Stone/Eradicated zero a positive HP (no flash)"
+  },
+  "19": {
+   "original": "2D14B",
+   "what": "a spell learned by the class spell list (F604)"
+  },
+  "20": {
+   "original": "2D1AC",
+   "what": "a map flag bit of F01F set (no flash)"
+  },
+  "21": {
+   "original": "2D1C3",
+   "what": "an item into the first free pending-treasure row (no flash); full or an absent member: REFUSED"
+  },
+  "34": {
+   "original": "2D2CD",
+   "what": "party gold plus the value"
+  },
+  "35": {
+   "original": "2D2DE",
+   "what": "party gems plus the value"
+  },
+  "37": {
+   "original": "2D2EF",
+   "what": "temporary stat 0 plus the value, saturating at FFh"
+  },
+  "38": {
+   "original": "2D329",
+   "what": "temporary stat 1 plus the value, saturating at FFh"
+  },
+  "39": {
+   "original": "2D363",
+   "what": "temporary stat 2 plus the value, saturating at FFh"
+  },
+  "40": {
+   "original": "2D39D",
+   "what": "temporary stat 3 plus the value, saturating at FFh"
+  },
+  "41": {
+   "original": "2D3D7",
+   "what": "temporary stat 4 plus the value, saturating at FFh"
+  },
+  "42": {
+   "original": "2D411",
+   "what": "temporary stat 5 plus the value, saturating at FFh"
+  },
+  "43": {
+   "original": "2D44B",
+   "what": "temporary stat 6 plus the value, saturating at FFh"
+  },
+  "45": {
+   "original": "2D485",
+   "what": "permanent stat 0 plus the value, saturating at FFh"
+  },
+  "46": {
+   "original": "2D4BF",
+   "what": "permanent stat 1 plus the value, saturating at FFh"
+  },
+  "47": {
+   "original": "2D4F9",
+   "what": "permanent stat 2 plus the value, saturating at FFh"
+  },
+  "48": {
+   "original": "2D533",
+   "what": "permanent stat 3 plus the value, saturating at FFh"
+  },
+  "49": {
+   "original": "2D56D",
+   "what": "permanent stat 4 plus the value, saturating at FFh"
+  },
+  "50": {
+   "original": "2D5A7",
+   "what": "permanent stat 5 plus the value, saturating at FFh"
+  },
+  "51": {
+   "original": "2D5E1",
+   "what": "permanent stat 6 plus the value, saturating at FFh"
+  },
+  "52": {
+   "original": "2D61B",
+   "what": "permanent resistance plus the value, saturating at FFh"
+  },
+  "53": {
+   "original": "2D659",
+   "what": "permanent resistance plus the value, saturating at FFh"
+  },
+  "54": {
+   "original": "2D697",
+   "what": "permanent resistance plus the value, saturating at FFh"
+  },
+  "55": {
+   "original": "2D6D5",
+   "what": "permanent resistance plus the value, saturating at FFh"
+  },
+  "56": {
+   "original": "2D713",
+   "what": "permanent resistance plus the value, saturating at FFh"
+  },
+  "57": {
+   "original": "2D751",
+   "what": "permanent resistance plus the value, saturating at FFh"
+  },
+  "58": {
+   "original": "2D78F",
+   "what": "temporary resistance plus the value, saturating at FFh"
+  },
+  "59": {
+   "original": "2D7CD",
+   "what": "temporary resistance plus the value, saturating at FFh"
+  },
+  "60": {
+   "original": "2D80B",
+   "what": "temporary resistance plus the value, saturating at FFh"
+  },
+  "61": {
+   "original": "2D849",
+   "what": "temporary resistance plus the value, saturating at FFh"
+  },
+  "62": {
+   "original": "2D887",
+   "what": "temporary resistance plus the value, saturating at FFh"
+  },
+  "63": {
+   "original": "2D8C5",
+   "what": "temporary resistance plus the value, saturating at FFh"
+  },
+  "64": {
+   "original": "2D903",
+   "what": "level plus the value, saturating at FFh"
+  },
+  "65": {
+   "original": "2D93A",
+   "what": "party food (EFF6) plus the low word"
+  },
+  "66": {
+   "original": "2D946",
+   "what": "a random item by 305E8 into the pending treasure (no flash)"
+  },
+  "67": {
+   "original": "2DC50",
+   "what": "nothing (2DC50)"
+  },
+  "76": {
+   "original": "2DB58",
+   "what": "time passes (30CF3 with value x 5A0h minutes; no flash)"
+  },
+  "77": {
+   "original": "2DB72",
+   "what": "temporary AC plus the low byte"
+  },
+  "78": {
+   "original": "2DB82",
+   "what": "HP set to its maximum (2AAC2)"
+  },
+  "81": {
+   "original": "2DBA2",
+   "what": "SP set to its maximum (46470)"
+  },
+  "85": {
+   "original": "2DBDC",
+   "what": "the year plus the value: four F01F bits cleared, 29168, F01E = 1 (no flash)"
+  },
+  "103": {
+   "original": "2DC14",
+   "what": "a game flag bit of F05F set (no flash)"
+  },
+  "104": {
+   "original": "2DC1F",
+   "what": "a map flag bit of F06F set (no flash)"
+  },
+  "107": {
+   "original": "2DC35",
+   "what": "a bit of the member's character bits F30C + 4 x ED8E[member] set (no flash)"
+  }
+ }
+}
